@@ -1,0 +1,47 @@
+{
+  "_comment": "Source of truth for the search-assistant skill's en-US interaction model. Not served by the app — copy/paste this into the Alexa Developer Console's JSON Editor, under the en-US locale tab. Replace invocationName with your own choice before creating the skill (Amazon's rules: no 'Alexa'/'Amazon'/'Echo', generally 2+ words). Keep this in sync with en-IN.json — same intents/slots/samples, just duplicated per locale tab, which is how the Alexa console models multi-locale skills.",
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my assistant",
+      "intents": [
+        { "name": "AMAZON.CancelIntent", "samples": [] },
+        { "name": "AMAZON.HelpIntent", "samples": [] },
+        { "name": "AMAZON.StopIntent", "samples": [] },
+        { "name": "AMAZON.NavigateHomeIntent", "samples": [] },
+        { "name": "AMAZON.FallbackIntent", "samples": [] },
+        {
+          "name": "DefineIntent",
+          "slots": [
+            { "name": "term", "type": "AMAZON.SearchQuery" }
+          ],
+          "samples": [
+            "define {term}",
+            "to define {term}",
+            "what does {term} mean",
+            "what {term} means",
+            "the definition of {term}",
+            "for the definition of {term}",
+            "define the word {term}",
+            "what is the meaning of {term}"
+          ]
+        },
+        {
+          "name": "LookupIntent",
+          "slots": [
+            { "name": "query", "type": "AMAZON.SearchQuery" }
+          ],
+          "samples": [
+            "what is {query}",
+            "what's {query}",
+            "who is {query}",
+            "tell me about {query}",
+            "to look up {query}",
+            "look up {query}",
+            "what are {query}",
+            "search for {query}"
+          ]
+        }
+      ]
+    }
+  }
+}

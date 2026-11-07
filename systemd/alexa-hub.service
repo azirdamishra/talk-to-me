@@ -1,0 +1,36 @@
+# Runs alexa-hub (Alexa skill backend) on boot, and restarts it
+# automatically if it ever crashes.
+#
+# Install on the Pi:
+#   sudo cp systemd/alexa-hub.service /etc/systemd/system/alexa-hub.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now alexa-hub
+#
+# Check on it:
+#   systemctl status alexa-hub
+#   journalctl -u alexa-hub -f
+#
+# Edit User and WorkingDirectory below to match your Pi setup before installing.
+#
+# After creating the skill in the Alexa Developer Console, copy its Skill ID
+# (starts "amzn1.ask.skill...", shown on the skill's Endpoint page) into
+# ALEXA_SKILL_ID below. This pins the server to reject correctly-signed Alexa
+# requests that belong to a *different* skill — see README's security section.
+
+[Unit]
+Description=Alexa Hub (search assistant skill)
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/alexa-hub
+Environment=PORT=3002
+Environment=NODE_ENV=production
+Environment=ALEXA_SKILL_ID=amzn1.ask.skill.REPLACE-WITH-YOUR-SKILL-ID
+ExecStart=/usr/bin/node server/dist/index.js
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

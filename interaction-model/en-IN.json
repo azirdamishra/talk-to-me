@@ -1,0 +1,47 @@
+{
+  "_comment": "Source of truth for the search-assistant skill's en-IN interaction model. Not served by the app — copy/paste this into the Alexa Developer Console's JSON Editor, under the en-IN locale tab. Added so a tester/device registered on an India Amazon account isn't blocked by a region/locale mismatch with en-US (Amazon's beta-testing docs warn this can happen). Keep this in sync with en-US.json.",
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my assistant",
+      "intents": [
+        { "name": "AMAZON.CancelIntent", "samples": [] },
+        { "name": "AMAZON.HelpIntent", "samples": [] },
+        { "name": "AMAZON.StopIntent", "samples": [] },
+        { "name": "AMAZON.NavigateHomeIntent", "samples": [] },
+        { "name": "AMAZON.FallbackIntent", "samples": [] },
+        {
+          "name": "DefineIntent",
+          "slots": [
+            { "name": "term", "type": "AMAZON.SearchQuery" }
+          ],
+          "samples": [
+            "define {term}",
+            "to define {term}",
+            "what does {term} mean",
+            "what {term} means",
+            "the definition of {term}",
+            "for the definition of {term}",
+            "define the word {term}",
+            "what is the meaning of {term}"
+          ]
+        },
+        {
+          "name": "LookupIntent",
+          "slots": [
+            { "name": "query", "type": "AMAZON.SearchQuery" }
+          ],
+          "samples": [
+            "what is {query}",
+            "what's {query}",
+            "who is {query}",
+            "tell me about {query}",
+            "to look up {query}",
+            "look up {query}",
+            "what are {query}",
+            "search for {query}"
+          ]
+        }
+      ]
+    }
+  }
+}
