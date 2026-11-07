@@ -8,6 +8,7 @@
 import express from 'express';
 import { requestLogger } from './logger.js';
 import { searchRouter } from './skills/search/route.js';
+import { musicRouter } from './skills/music/route.js';
 
 export const app = express();
 app.use(requestLogger);
@@ -17,4 +18,4 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/skills/search', searchRouter);
-// /skills/music intentionally left unclaimed for a later phase.
+app.use('/skills/music', musicRouter);

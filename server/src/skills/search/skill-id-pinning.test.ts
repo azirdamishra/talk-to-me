@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { RequestEnvelope } from 'ask-sdk-model';
 
-// Separate test file because skill.ts reads process.env.ALEXA_SKILL_ID at
+// Separate test file because skill.ts reads process.env.ALEXA_SEARCH_SKILL_ID at
 // import time — setting it here, then importing, gives this file its own
 // pinned searchSkill instance without affecting search-skill.test.ts.
 vi.mock('./lookup.js', () => ({
@@ -9,7 +9,7 @@ vi.mock('./lookup.js', () => ({
   lookupTopic: vi.fn(async (query: string) => `mock summary of ${query}`),
 }));
 
-process.env.ALEXA_SKILL_ID = 'amzn1.ask.skill.the-real-skill-id';
+process.env.ALEXA_SEARCH_SKILL_ID = 'amzn1.ask.skill.the-real-skill-id';
 const { searchSkill } = await import('./skill.js');
 
 function launchRequestEnvelope(applicationId: string): RequestEnvelope {
@@ -21,7 +21,7 @@ function launchRequestEnvelope(applicationId: string): RequestEnvelope {
 }
 
 describe('skill ID pinning', () => {
-  it('serves a request whose applicationId matches ALEXA_SKILL_ID', async () => {
+  it('serves a request whose applicationId matches ALEXA_SEARCH_SKILL_ID', async () => {
     const result = await searchSkill.invoke(launchRequestEnvelope('amzn1.ask.skill.the-real-skill-id'));
     expect(result.response.outputSpeech).toBeDefined();
   });

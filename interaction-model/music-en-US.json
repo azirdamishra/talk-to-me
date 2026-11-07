@@ -1,0 +1,34 @@
+{
+  "_comment": "Source of truth for the music skill's en-US interaction model. This is a SEPARATE Alexa skill from the search assistant (different invocation name, different Skill ID) even though it's served by this same process at /skills/music — create it as its own skill in the Alexa Developer Console. Not served by the app — copy/paste this into that skill's JSON Editor, under the en-US locale tab. Replace invocationName with your own choice before creating the skill (Amazon's rules: no 'Alexa'/'Amazon'/'Echo', generally 2+ words). Also requires turning on the 'Audio Player' interface under the console's Interfaces tab — not something this JSON can set. Keep this in sync with music-en-IN.json — same intents/slots/samples, just duplicated per locale tab, which is how the Alexa console models multi-locale skills.",
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my music",
+      "intents": [
+        { "name": "AMAZON.CancelIntent", "samples": [] },
+        { "name": "AMAZON.HelpIntent", "samples": [] },
+        { "name": "AMAZON.StopIntent", "samples": [] },
+        { "name": "AMAZON.NavigateHomeIntent", "samples": [] },
+        { "name": "AMAZON.FallbackIntent", "samples": [] },
+        { "name": "AMAZON.PauseIntent", "samples": [] },
+        { "name": "AMAZON.ResumeIntent", "samples": [] },
+        { "name": "AMAZON.NextIntent", "samples": [] },
+        { "name": "AMAZON.PreviousIntent", "samples": [] },
+        {
+          "name": "PlayIntent",
+          "slots": [
+            { "name": "song", "type": "AMAZON.SearchQuery" }
+          ],
+          "samples": [
+            "play {song}",
+            "to play {song}",
+            "play the song {song}",
+            "put on {song}",
+            "listen to {song}",
+            "i want to hear {song}",
+            "start playing {song}"
+          ]
+        }
+      ]
+    }
+  }
+}

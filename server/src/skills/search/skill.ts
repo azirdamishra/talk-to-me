@@ -26,8 +26,8 @@ const skillBuilder = SkillBuilders.custom()
 // set once the skill is created — see README). Without this, Alexa's signature
 // verification alone would still accept a correctly-signed request sent by a
 // *different* skill that someone else points at this same public endpoint.
-if (process.env.ALEXA_SKILL_ID) {
-  skillBuilder.withSkillId(process.env.ALEXA_SKILL_ID);
+if (process.env.ALEXA_SEARCH_SKILL_ID) {
+  skillBuilder.withSkillId(process.env.ALEXA_SEARCH_SKILL_ID);
 }
 
 export const searchSkill = skillBuilder.create();

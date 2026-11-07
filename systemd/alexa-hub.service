@@ -1,5 +1,5 @@
-# Runs alexa-hub (Alexa skill backend) on boot, and restarts it
-# automatically if it ever crashes.
+# Runs alexa-hub (search assistant + music skill backends, one process) on
+# boot, and restarts it automatically if it ever crashes.
 #
 # Install on the Pi:
 #   sudo cp systemd/alexa-hub.service /etc/systemd/system/alexa-hub.service
@@ -12,13 +12,21 @@
 #
 # Edit User and WorkingDirectory below to match your Pi setup before installing.
 #
-# After creating the skill in the Alexa Developer Console, copy its Skill ID
-# (starts "amzn1.ask.skill...", shown on the skill's Endpoint page) into
-# ALEXA_SKILL_ID below. This pins the server to reject correctly-signed Alexa
-# requests that belong to a *different* skill — see README's security section.
+# After creating each skill in the Alexa Developer Console, copy its Skill ID
+# (starts "amzn1.ask.skill...", shown on the skill's Endpoint page) into the
+# matching variable below. This pins each route to reject correctly-signed
+# Alexa requests that belong to a *different* skill — see README's security
+# section. The two skills are pinned separately (ALEXA_SEARCH_SKILL_ID vs
+# ALEXA_MUSIC_SKILL_ID) since they're separate Alexa skills sharing this one
+# process.
+#
+# YOUTUBE_API_KEY (music skill only) comes from the Google Cloud Console
+# (YouTube Data API v3) — a free key is enough at this traffic volume. The
+# music skill also needs yt-dlp installed and on PATH for this service user
+# (sudo -u pi yt-dlp --version).
 
 [Unit]
-Description=Alexa Hub (search assistant skill)
+Description=Alexa Hub (search assistant + music skills)
 After=network.target
 
 [Service]
@@ -27,7 +35,10 @@ User=pi
 WorkingDirectory=/home/pi/alexa-hub
 Environment=PORT=3002
 Environment=NODE_ENV=production
-Environment=ALEXA_SKILL_ID=amzn1.ask.skill.REPLACE-WITH-YOUR-SKILL-ID
+Environment=ALEXA_SEARCH_SKILL_ID=amzn1.ask.skill.REPLACE-WITH-YOUR-SEARCH-SKILL-ID
+Environment=ALEXA_MUSIC_SKILL_ID=amzn1.ask.skill.REPLACE-WITH-YOUR-MUSIC-SKILL-ID
+Environment=YOUTUBE_API_KEY=REPLACE-WITH-YOUR-YOUTUBE-API-KEY
+Environment=DB_PATH=/home/pi/alexa-hub/data/alexa-hub.db
 ExecStart=/usr/bin/node server/dist/index.js
 Restart=on-failure
 RestartSec=2
